@@ -1,0 +1,17 @@
+name: my first workflow
+
+on: push
+
+jobs:
+    first_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: welcome message
+              run: echo "say hello to my first GHA workflow"
+
+            - name: list files of this repo
+              run: ls 
+
+            - name: read the file
+              run: cat README.md
+              
