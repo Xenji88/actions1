@@ -1,0 +1,48 @@
+#Multi jobs in single WF
+
+name: generate ASCII Artwork
+on: push
+
+Jobs:
+    build_job_1:
+        runs-on: ubuntu-latest
+        steps:
+            - name: install cowsay program
+              run: sudo apt install cowsay -y
+            
+            - name: execute cowsay CMD
+              run: cowsay -f dragon "Run for cover.. I'm a dragon.. RAWRR.." >> dragon.txt
+
+            - name: upload dragon text file
+              uses: actions/upload-artifact@v4
+              with:
+                name: dragon-file
+                path: dragon.txt
+
+    test_job_2:
+        needs: build_job_1
+        runs-on: ubuntu-latest
+        steps:
+            - name: download dragon text file
+              uses: actions/download-artifact@v4
+              with:
+                name: dragon-file
+
+            - name: test if file exists
+              run: grep -i "dragon" dragon.txt
+
+    deploy_job_3:
+        needs: test_job_2
+        runs-on: ubuntu-latest
+        steps:
+            - name: download dragon text file
+              uses: actions/download-artifact@v4
+              with:
+                name: dragon-file
+            
+            - name: read dragon file
+              run: cat dragon.txt
+
+            - name: deploy dragon
+              run: echo DEPLOOOY....
+             
