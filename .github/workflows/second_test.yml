@@ -1,9 +1,7 @@
-#Multi jobs in single WF
-
 name: generate ASCII Artwork
 on: push
 
-Jobs:
+jobs:
     build_job_1:
         runs-on: ubuntu-latest
         steps:
@@ -44,5 +42,4 @@ Jobs:
               run: cat dragon.txt
 
             - name: deploy dragon
-              run: echo DEPLOOOY....
-             
+              run: echo DEPLOOOY...
